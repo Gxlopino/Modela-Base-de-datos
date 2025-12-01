@@ -10,7 +10,6 @@ join Producto_Usuarios pu on p.id_producto=pu.id_producto;
 DECLARE @IdUsuario INT = 4; 
 
 SELECT 
-	
     p.id_producto,
     p.nombre AS Nombre_Producto,
     dbo.fn_VerificarAlergia(@IdUsuario, p.id_producto) AS Alerta_Alergia,
@@ -21,8 +20,8 @@ SELECT
     END AS Estado
 FROM Productos p;
 
-DECLARE @MiUsuario NUMERIC(10) = 1;   
-DECLARE @MiProducto NUMERIC(10) = 1; 
+DECLARE @MiUsuario NUMERIC(10) = 5;   
+DECLARE @MiProducto NUMERIC(10) = 4; 
 
 EXEC sp_DiagnosticoProductoUsuario 
     @id_usuario = @MiUsuario, 
