@@ -248,39 +248,6 @@ CREATE OR ALTER VIEW v_RecomendacionAlternativas
 AS
 SELECT 
     u.id_usuario,
-    u.objetivo_salud,
-
-    p_origen.id_producto AS id_producto_actual,
-    p_origen.nombre AS nombre_producto_actual,
-
-    p_alt.id_producto AS id_producto_sugerido,
-    p_alt.nombre AS nombre_sugerido,
-    vn.azucares,
-    vn.calorias,
-
-    ROW_NUMBER() OVER (
-        PARTITION BY u.id_usuario, p_origen.id_producto 
-        ORDER BY 
-            CASE 
-                WHEN u.objetivo_salud LIKE '%azúcar%' OR u.objetivo_salud LIKE '%diabetes%' 
-                    THEN vn.azucares
-                WHEN u.objetivo_salud LIKE '%peso%' OR u.objetivo_salud LIKE '%calorías%' 
-                    THEN vn.calorias
-                ELSE vn.azucares 
-            END ASC
-    ) AS ranking
-
-FROM Usuarios u
-CROSS JOIN Productos p_origen 
-INNER JOIN Productos p_alt ON p_origen.id_categoria = p_alt.id_categoria
-INNER JOIN Valor_Nutricional vn ON p_alt.id_producto = vn.id_producto
-WHERE p_origen.id_producto <> p_alt.id_producto 
-GO
-
-CREATE OR ALTER VIEW v_RecomendacionAlternativas
-AS
-SELECT 
-    u.id_usuario,
     u.nombres_apellidos AS nombre_usuario,
     p1.id_producto AS id_producto_origen,
     p1.nombre AS nombre_original,

@@ -7,7 +7,7 @@ FROM Productos p
 JOIN Valor_Nutricional vn ON p.id_producto = vn.id_producto
 join Producto_Usuarios pu on p.id_producto=pu.id_producto;
 
-DECLARE @IdUsuario INT = 2; 
+DECLARE @IdUsuario INT = 4; 
 
 SELECT 
 	
